@@ -1,11 +1,8 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 
 const cors = require('cors')
-
-const mongoose = require('mongoose')
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/exercise-track' )
-console.log(process.env.MONGO_URI);
 
 app.use(cors())
 
@@ -46,6 +43,13 @@ app.use((err, req, res, next) => {
     .send(errMessage)
 })
 
-const listener = app.listen(process.env.PORT || 3000, () => {
-  console.log('Your app is listening on port ' + listener.address().port)
-})
+// Only start the app if the database is available
+console.log(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(db => {
+    console.log(`Database ${db.connections[0].name} on ${db.connections[0].host} connected`);
+    const listener = app.listen(process.env.PORT, function () {
+      console.log('Your app is listening on port ' + listener.address().port);
+    });
+  })
+  .catch(error => console.log(error));
