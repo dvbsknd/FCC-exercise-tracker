@@ -45,11 +45,14 @@ app.use((err, req, res, next) => {
 
 // Only start the app if the database is available
 console.log(process.env.MONGO_URI);
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGO_URI, {
+  dbName: process.env.MONGO_DB,
+  useNewUrlParser: true,
+  useUnifiedTopology: true })
   .then(db => {
     console.log(`Database ${db.connections[0].name} on ${db.connections[0].host} connected`);
     const listener = app.listen(process.env.PORT, function () {
       console.log('Your app is listening on port ' + listener.address().port);
     });
   })
-  .catch(error => console.log(error));
+  .catch(error => console.log('Datbase Error:', error));
