@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 });
 
 // Git/Glitch syncing webhook
-const gitWebhook = require('./routers/git.js');
+const gitWebhook = require('./webhooks/git.js');
 app.use('/git', gitWebhook);
 
 // Not found middleware
