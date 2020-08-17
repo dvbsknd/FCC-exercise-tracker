@@ -2,14 +2,15 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
+// CORS handling
 const cors = require('cors')
-
 app.use(cors())
 
+// Body parsing
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
-
+// Static files & HTML views
 app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
@@ -24,7 +25,7 @@ app.use((req, res, next) => {
   return next({status: 404, message: 'not found'})
 })
 
-// Error Handling middleware
+// Error handling middleware
 app.use((err, req, res, next) => {
   let errCode, errMessage
 
@@ -43,8 +44,7 @@ app.use((err, req, res, next) => {
     .send(errMessage)
 })
 
-// Only start the app if the database is available
-console.log(process.env.MONGO_URI);
+// Start the app if the database is available
 mongoose.connect(process.env.MONGO_URI, {
   dbName: process.env.MONGO_DB,
   useNewUrlParser: true,
@@ -52,7 +52,7 @@ mongoose.connect(process.env.MONGO_URI, {
   .then(db => {
     console.log(`Database ${db.connections[0].name} on ${db.connections[0].host} connected`);
     const listener = app.listen(process.env.PORT, function () {
-      console.log('Your app is listening on port ' + listener.address().port);
+      console.log('Server is listening on port ' + listener.address().port);
     });
   })
   .catch(error => console.log('Datbase Error:', error));
