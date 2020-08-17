@@ -18,6 +18,9 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 
+// Git/Glitch syncing webhook
+const gitWebhook = require('./routers/git.js');
+app.use('/git', gitWebhook);
 
 // Not found middleware
 app.use((req, res, next) => {

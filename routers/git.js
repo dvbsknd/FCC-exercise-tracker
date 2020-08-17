@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const bodyParser = require('body-parser');
 
 router.use((req, res, next) => {
-  console.log('git.js accessed');
+  console.log('GITHUB_URL is set to ' + process.env.GITHUB_URL);
   next();
 });
 router.use(bodyParser.json());
