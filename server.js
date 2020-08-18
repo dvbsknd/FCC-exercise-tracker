@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const { userController, exerciseController } = require('./controllers');
 const app = express()
 
 // CORS handling
@@ -19,6 +20,14 @@ app.get('/', (req, res) => {
 // Git/Glitch syncing webhook
 const gitWebhook = require('./webhooks/git.js');
 app.use('/git', gitWebhook);
+
+// 'User' controller
+app.use('/api/exercise/new-user/', userController);
+app.use('/api/exercise/users/', userController);
+
+// 'Exercise' controller
+app.use('/api/exercise/add/', exerciseController);
+app.use('/api/exercise/log/', exerciseController);
 
 // Not found middleware
 app.use((req, res, next) => {
