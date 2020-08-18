@@ -22,8 +22,8 @@ const gitWebhook = require('./webhooks/git.js');
 app.use('/git', gitWebhook);
 
 // 'User' controller
-app.use('/api/exercise/new-user/', userController);
-app.use('/api/exercise/users/', userController);
+app.use('/api/exercise/new-user/', userController.create);
+app.use('/api/exercise/users/', userController.list);
 
 // 'Exercise' controller
 app.use('/api/exercise/add/', exerciseController);
