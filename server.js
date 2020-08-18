@@ -1,6 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const { userController, exerciseController } = require('./controllers');
+const {
+  createUser,
+  listUsers,
+  addExercise,
+  listExercises } = require('./controllers');
 const app = express()
 
 // CORS handling
@@ -22,12 +26,12 @@ const gitWebhook = require('./webhooks/git.js');
 app.use('/git', gitWebhook);
 
 // 'User' controller
-app.use('/api/exercise/new-user/', userController.create);
-app.use('/api/exercise/users/', userController.list);
+app.use('/api/exercise/new-user/', createUser);
+app.use('/api/exercise/users/', listUsers);
 
 // 'Exercise' controller
-app.use('/api/exercise/add/', exerciseController);
-app.use('/api/exercise/log/', exerciseController);
+app.use('/api/exercise/add/', addExercise);
+app.use('/api/exercise/log/', listExercises);
 
 // Not found middleware
 app.use((req, res, next) => {

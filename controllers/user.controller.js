@@ -1,6 +1,6 @@
 const { User } = require('../models');
 module.exports = {
-  create: function (req, res) {
+  createUser: function (req, res) {
     const { username } = req.body;
     const user = new User({ username });
     user.save()
@@ -15,7 +15,20 @@ module.exports = {
         });
       });
   },
-  list: function (req, res) {
+  listUsers: function (req, res) {
+    User.find()
+      .then(users => res.json({ users }))
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({
+          error: {
+            message: 'Error while trying to retrieve users',
+            error: err
+          }
+        });
+      });
+  },
+  addExercise: function (req, res) {
     User.find()
       .then(users => res.json({ users }))
       .catch(err => {
