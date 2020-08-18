@@ -44,7 +44,12 @@ module.exports = {
       new: true
     }
     User.findByIdAndUpdate(userId, { $push: { exercises: exercise } }, options)
-      .then(user => res.json(user))
+      .then(user => {
+        console.log(user.exercises);
+        res.json(user.exercises.map(exercise => {
+          return { username: user.username, description, duration, _id: exercise._id, date };
+        }));
+      })
       .catch(err => {
         console.error(err);
         res.status(500).json({
