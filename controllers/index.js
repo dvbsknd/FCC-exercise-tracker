@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const { User } = require('../models');
 module.exports = {
   createUser: function (req, res) {
@@ -55,13 +56,16 @@ module.exports = {
       });
   },
   listExercises: (req, res, next) => {
-    const { userId } = req.params;
-    User.findById(userId, 'exercises')
-      .then(user => {
-        const { _id, exercises } = user;
-        const exerciseCount = user.exercises.length;
-        res.json({ _id, exercises, exerciseCount });
-      })
+    const { userId, from, to, limit } = req.query;
+    const mongooseId = mongoose.Types.ObjectId(userId);
+    User.aggregate([
+      { $match: { '_id': mongooseId } },
+      { $unwind: '$exercises' },
+      { $match: { 'exercises.date': { $gte: new Date(from), $lte: new Date(to) } } },
+      { $limit: Number(limit) },
+      { $project: { _id: 0, 'exercises._id': 0, __v: 0 } }
+    ], console.log)
+      .then(data => res.json(data))
       .catch(err => {
         console.error(err);
         res.status(500).json({
