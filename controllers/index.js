@@ -47,7 +47,8 @@ module.exports = {
       .then(user => {
         console.log(user.exercises);
         res.json(user.exercises.map(exercise => {
-          return { username: user.username, description, duration, _id: exercise._id, date };
+          let niceDate = new Date(exercise.date).toString().split(' ').slice(0, 4).join(' ');
+          return { username: user.username, description, duration: Number(duration), _id: exercise._id, date: niceDate };
         }));
       })
       .catch(err => {
