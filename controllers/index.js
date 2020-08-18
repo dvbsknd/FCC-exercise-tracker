@@ -72,14 +72,21 @@ module.exports = {
     const mongooseId = mongoose.Types.ObjectId(userId);
     const filters = [
       { $match: { '_id': mongooseId } },
-      { $unwind: '$exercises' },
-      { $project: { _id: 0, username: 0, 'exercises._id': 0, __v: 0 } }
     ];
     if (from) filters.push({ $match: { 'exercises.date': { $gte: new Date(from) } } });
     if (to) filters.push({ $match: { 'exercises.date': { $lte: new Date(to) } } });
     if (limit) filters.push({ $limit: Number(limit) });
     User.aggregate(filters)
-      .then(data => res.json(data.map(o => o.exercises)))
+      .then(data => {
+        console.log(data[0]);
+        const { _id, username, exercises } = data[0];
+        res.json({
+          _id,
+          username,
+          log: exercises,
+          count: exercises.length
+        });
+      })
       .catch(err => {
         console.error(err);
         res.status(500).json({
