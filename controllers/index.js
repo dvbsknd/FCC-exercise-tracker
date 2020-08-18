@@ -63,9 +63,9 @@ module.exports = {
       { $unwind: '$exercises' },
       { $match: { 'exercises.date': { $gte: new Date(from), $lte: new Date(to) } } },
       { $limit: Number(limit) },
-      { $project: { _id: 0, 'exercises._id': 0, __v: 0 } }
+      { $project: { _id: 0, username: 0, 'exercises._id': 0, __v: 0 } }
     ], console.log)
-      .then(data => res.json(data))
+      .then(data => res.json(data.map(o => o.exercises)))
       .catch(err => {
         console.error(err);
         res.status(500).json({
