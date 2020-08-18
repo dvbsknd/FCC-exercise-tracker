@@ -1,30 +1,30 @@
 {
-	"name": "fcc-exercise-tracker",
-	"version": "0.1.0",
-	"description": "A microservice project from freeCodeCamp's curriculum.",
-	"main": "server.js",
-	"scripts": {
-		"start": "node server.js",
-		"dev": "export $(cat .env | xargs) && nodemon server.js"
-	},
-	"dependencies": {
-		"cors": "^2.8.1",
-		"express": "^4.14.0",
-		"mongodb": "^3.6.0",
-		"mongoose": "^5.0.0",
-		"node-cmd": "^3.0.0",
-		"shortid": "^2.2.6"
-	},
-	"engines": {
-		"node": "6.9.1"
-	},
-	"repository": {
-		"url": "https://github.com/dvbsknd/FCC-exercise-tracker.git"
-	},
-	"license": "MIT",
-	"keywords": [
-		"node",
-		"gomix",
-		"express"
-	]
+  "name": "fcc-exercise-tracker",
+  "version": "0.1.0",
+  "description": "A microservice project from freeCodeCamp's curriculum.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "export $(cat .env | xargs) && nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.0.0",
+    "node-cmd": "^3.0.0",
+    "shortid": "^2.2.6"
+  },
+  "engines": {
+    "node": "6.9.1"
+  },
+  "repository": {
+    "url": "https://github.com/dvbsknd/FCC-exercise-tracker.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "gomix",
+    "express"
+  ]
 }
