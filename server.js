@@ -15,6 +15,12 @@ app.use(cors())
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
+// Request logging for debugging FCC tests
+app.use((req, res, next) => {
+  console.log('Request Details ->', req.query, req.params, req.body);
+  next();
+});
+
 // Static files & HTML views
 app.use(express.static('public'))
 app.get('/', (req, res) => {
