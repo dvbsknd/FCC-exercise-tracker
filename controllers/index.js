@@ -18,7 +18,7 @@ module.exports = {
   },
   listUsers: function (req, res) {
     User.find()
-      .then(users => res.json({ users }))
+      .then(users => res.json(users.map(user => user.username)))
       .catch(err => {
         console.error(err);
         res.status(500).json({
