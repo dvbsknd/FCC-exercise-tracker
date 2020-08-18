@@ -48,7 +48,7 @@ module.exports = {
         console.log(user.exercises);
         const { exercises } = user;
         const exercise = exercises[exercises.length - 1];
-        const niceDate = new Date(exercise.date).toString().split(' ').slice(0, 4).join(' ');
+        const niceDate = new Date(exercise.date).toDateString();
         res.json({
           username: user.username,
           description: exercise.description,
