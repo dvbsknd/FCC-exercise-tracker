@@ -46,10 +46,16 @@ module.exports = {
     User.findByIdAndUpdate(userId, { $push: { exercises: exercise } }, options)
       .then(user => {
         console.log(user.exercises);
-        res.json(user.exercises.map(exercise => {
-          let niceDate = new Date(exercise.date).toString().split(' ').slice(0, 4).join(' ');
-          return { username: user.username, description, duration: Number(duration), _id: exercise._id, date: niceDate };
-        }));
+        const { exercises } = user;
+        const exercise = exercises[exercises.length - 1];
+        const niceDate = new Date(exercise.date).toString().split(' ').slice(0, 4).join(' ');
+        res.json({
+          username: user.username,
+          description: exercise.description,
+          duration: Number(exercise.duration),
+          _id: user._id,
+          date: niceDate
+        });
       })
       .catch(err => {
         console.error(err);
