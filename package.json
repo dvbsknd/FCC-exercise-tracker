@@ -1,7 +1,7 @@
 {
 	"name": "fcc-exercise-tracker",
 	"version": "0.1.0",
-	"description": "A REST API project, part of Free Code Camp's curriculum",
+	"description": "A microservice project from freeCodeCamp's curriculum.",
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js",
@@ -19,7 +19,7 @@
 		"node": "6.9.1"
 	},
 	"repository": {
-		"url": "https://gomix.com/#!/project/welcome-project"
+		"url": "https://github.com/dvbsknd/FCC-exercise-tracker.git"
 	},
 	"license": "MIT",
 	"keywords": [
