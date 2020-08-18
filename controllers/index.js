@@ -54,5 +54,22 @@ module.exports = {
         });
       });
   },
-  listExercises: (req, res, next) => next()
+  listExercises: (req, res, next) => {
+    const { userId } = req.params;
+    User.findById(userId, 'exercises')
+      .then(user => {
+        const { _id, exercises } = user;
+        const exerciseCount = user.exercises.length;
+        res.json({ _id, exercises, exerciseCount });
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).json({
+          error: {
+            message: 'Error while trying to retrieve exercise log',
+            error: err
+          }
+        });
+      });
+  }
 };

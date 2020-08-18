@@ -31,7 +31,7 @@ app.use('/api/exercise/users/', listUsers);
 
 // 'Exercise' controller
 app.use('/api/exercise/add/', addExercise);
-app.use('/api/exercise/log/', listExercises);
+app.use('/api/exercise/log/:userId', listExercises);
 
 // Not found middleware
 app.use((req, res, next) => {
