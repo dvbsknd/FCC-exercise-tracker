@@ -64,13 +64,15 @@ module.exports = {
   listExercises: (req, res, next) => {
     const { userId, from, to, limit } = req.query;
     const mongooseId = mongoose.Types.ObjectId(userId);
-    User.aggregate([
+    const filters = [
       { $match: { '_id': mongooseId } },
       { $unwind: '$exercises' },
-      { $match: { 'exercises.date': { $gte: new Date(from), $lte: new Date(to) } } },
-      { $limit: Number(limit) },
       { $project: { _id: 0, username: 0, 'exercises._id': 0, __v: 0 } }
-    ], console.log)
+    ];
+    if (from) filters.push({ $match: { 'exercises.date': { $gte: new Date(from) } } });
+    if (to) filters.push({ $match: { 'exercises.date': { $lte: new Date(to) } } });
+    if (limit) filters.push({ $limit: Number(limit) });
+    User.aggregate(filters)
       .then(data => res.json(data.map(o => o.exercises)))
       .catch(err => {
         console.error(err);
