@@ -47,7 +47,6 @@ const addExercise = (req, res, next) => {
   }
   User.findByIdAndUpdate(userId, { $push: { exercises: exercise } }, options)
     .then(user => {
-      console.log(user.exercises);
       const { exercises } = user;
       const exercise = exercises[exercises.length - 1];
       const niceDate = new Date(exercise.date).toDateString();
@@ -81,7 +80,6 @@ const listExercises = (req, res, next) => {
   if (limit) filters.push({ $limit: Number(limit) });
   User.aggregate(filters)
     .then(data => {
-      console.log(data[0]);
       const { _id, username, exercises } = data[0];
       res.json({
         _id,

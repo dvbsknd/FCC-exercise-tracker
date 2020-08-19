@@ -17,7 +17,9 @@ app.use(express.json())
 
 // Request logging for debugging FCC tests
 app.use((req, res, next) => {
-  console.log('Request Details ->', req.query, req.params, req.body);
+  console.log('Request Params ->', req.params);
+  console.log('Request Query ->', req.query);
+  console.log('Request Body ->', req.body);
   next();
 });
 
