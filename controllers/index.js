@@ -19,16 +19,16 @@ const createUser = (req, res) => {
 
 const listUsers = (req, res) => {
   User.find()
-  .then(users => res.json(users.map(user => user.username)))
-  .catch(err => {
-    console.error(err);
-    res.status(500).json({
-      error: {
-        message: 'Error while trying to retrieve users',
-        error: err
-      }
+    .then(users => res.json(users.map(user => user.username)))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: {
+          message: 'Error while trying to retrieve users',
+          error: err
+        }
+      });
     });
-  });
 };
 
 const addExercise = (req, res, next) => {
@@ -74,18 +74,21 @@ const listExercises = (req, res, next) => {
   const mongooseId = mongoose.Types.ObjectId(userId);
   const filters = [
     { $match: { '_id': mongooseId } },
+    { $unwind: '$exercises' }
   ];
+
   if (from) filters.push({ $match: { 'exercises.date': { $gte: new Date(from) } } });
   if (to) filters.push({ $match: { 'exercises.date': { $lte: new Date(to) } } });
   if (limit) filters.push({ $limit: Number(limit) });
+
   User.aggregate(filters)
     .then(data => {
-      const { _id, username, exercises } = data[0];
+      const { _id, username } = data[0];
       res.json({
         _id,
         username,
-        log: exercises,
-        count: exercises.length
+        log: data.map(u => u.exercises),
+        count: data.length
       });
     })
     .catch(err => {
